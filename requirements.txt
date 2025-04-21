@@ -1,7 +1,10 @@
+opencv-python
+numpy
+open3d
+scikit-learn
+scipy
 fastapi
 uvicorn
-numpy
-opencv-python
-scipy
+Pillow
+pyvista
 requests
-python-multipart
