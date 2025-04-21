@@ -75,7 +75,7 @@ This script will generate 3D visualizations and display the point cloud at each 
 
 1. **Initial Setup**:
    - The brick is assumed to be initially aligned with the **X-axis** as the longest side (210 mm), **Y-axis** as the short side (100 mm), and **Z-axis** as the thickness (50 mm).
-   - The **geometry** of the brick is known, so i leverage Principal Component Analysis (PCA) to estimate the **rotation** by comparing the 3D point cloud to this reference configuration.
+   - The **geometry** of the brick is known, so I leverage Principal Component Analysis (PCA) to estimate the **rotation** by comparing the 3D point cloud to this reference configuration.
 
 ---
 
@@ -87,11 +87,11 @@ This script will generate 3D visualizations and display the point cloud at each 
    <img src="images/0/pca.png" alt="Point Cloud Extraction" width="400"/>
 
 2. **Crop the Point Cloud**  
-   - Since the brick is placed near the center, i filter out far or noisy points to enhance accuracy.  
+   - Since the brick is placed near the center, I filter out far or noisy points to enhance accuracy.  
    <img src="images/0/croped_image.png" alt="Cropped Point Cloud" width="400"/>
 
 3. **Calculate the Centroid**  
-   - I compute the centroid of the cropped cloud, which gives us the **translation** of the brick in the camera coordinate system.
+   - Compute the centroid of the cropped cloud, which gives us the **translation** of the brick in the camera coordinate system.
 
 4. **Extract Rotation (Roll, Pitch, Yaw)**  
    - The point cloud is centered around the origin by subtracting the centroid.  
@@ -99,15 +99,15 @@ This script will generate 3D visualizations and display the point cloud at each 
    <img src="images/0/axes.png" alt="PCA Axes" width="400"/>
 
 5. **Compute Final Rotation**  
-   - The rotation matrix from PCA axes is converted into **Euler angles** (Roll, Pitch, Yaw) to represent the 3D rotation.  
-   - These values, combined with the centroid, define the full 6D pose of the brick.  
-   <img src="images/0/pca+brick.png" alt="Pose Visualization with Brick" width="400"/>  
+   - The rotation matrix from PCA axes is converted into **Euler angles** (Roll, Pitch, Yaw) to represent the 3D rotation.   
+   <img src="images/0/pca+brick.png" alt="Pose Visualization with Brick" width="400"/>
+
    — The **orange box** represents the estimated brick pose.  
    — The **grey points** are the filtered point cloud.
 
 ---
 
-One of the primary trade-offs in our algorithm lies in the cropping strategy used to isolate the brick from the depth image. Relying on the assumption that the brick is generally placed near the center, and therefore apply a fixed-size crop to remove background noise. However, this introduces a delicate balance: if the crop is too small, it risk excluding parts of the brick or missing it entirely when it's off-center. On the other hand, a crop that is too large includes more of the surrounding scene, increasing the presence of irrelevant or noisy depth points, which can degrade the accuracy of the PCA-based rotation estimation. This trade-off reflects a compromise between flexibility and precision in detection.
+One of the primary trade-offs in our algorithm lies in the cropping strategy used to isolate the brick from the depth image. Relying on the assumption that the brick is generally placed near the center, and therefore apply a fixed-size crop to remove background noise. However, this introduces a delicate balance: if the crop is too small, it risks excluding parts of the brick or missing it entirely when it's off-center. On the other hand, a crop that is too large includes more of the surrounding scene, increasing the presence of irrelevant or noisy depth points, which can degrade the accuracy of the PCA-based rotation estimation. This trade-off reflects a compromise between flexibility and precision in detection.
 
 ---
 
